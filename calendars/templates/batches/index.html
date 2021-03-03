@@ -1,0 +1,10 @@
+<h3> 기수 리스트 </h3>
+{% if batch_list %}
+    <ul>
+    {% for batch in batch_list %}
+    <li>{{ batch.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No batches are available.</p>
+{% endif %}

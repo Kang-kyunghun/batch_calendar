@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <body>
+    <p>This is my page</p>
+    {% if calendar_list %}
+        <ul>
+        {% for calendar in calendar_list %}
+            <li><a href="{% url 'detail' calendar.id %}">{{ calendar.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No calendars are available.</p>
+    {% endif %}
+  </body>
+</html>
