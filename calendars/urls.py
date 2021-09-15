@@ -1,18 +1,20 @@
 from django.urls import path
 
 from .views import (
-    BatchesView,
+    GoogleLoginView,
+    FetchView,
     CalendarView,
-    CalendarsView,
     GoogleCalendarsView,
-    GoogleCalendarEventsView
+    GoogleCalendarEventsView,
+    ResultSuccessView,
 )
 
 app_name = 'calendars'
 urlpatterns = [
-    path('', CalendarsView.as_view()),
-    path('/<int:calendar_id>', CalendarView.as_view(), name='detail'),
-    path('/batches', BatchesView.as_view()),
+    #path('/google', GoogleLoginView.as_view()),
+    path('/fetch', FetchView.as_view()),
+    path('/success', ResultSuccessView.as_view()),
+    #path('/<str:calendar_id>', CalendarView.as_view(), name='detail'),
     path('/google', GoogleCalendarsView.as_view()),
     path('/google/<str:calendar_id>/events', GoogleCalendarEventsView.as_view()),
 ]

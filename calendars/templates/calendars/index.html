@@ -5,15 +5,27 @@
     <title>My test page</title>
   </head>
   <body>
-    <p>This is my page</p>
-    {% if calendar_list %}
-        <ul>
-        {% for calendar in calendar_list %}
-            <li><a href="{% url 'detail' calendar.id %}">{{ calendar.name }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No calendars are available.</p>
-    {% endif %}
+    <div class="calendars">
+      <label for="calendars" class="col-sm-2 control-label">Reference Calendars</label>
+      <div class="col-sm-10">    
+        <select id="calendars" onchange="location = this.value;">
+          <option value="" selected>Please select a player</option>
+          {% for calendar in calendar_list %}
+          <option value="{% url 'calendars:events' calendar.id %}">{{ calendar.summary }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="calendars">
+      <label for="calendars" class="col-sm-2 control-label">Calendars</label>
+      <div class="col-sm-10">    
+        <select id="calendars" onchange="location = this.value;">
+          <option value="" selected>Please select a player</option>
+          {% for calendar in calendar_list %}
+          <option value="{% url 'calendars:events' calendar.id %}">{{ calendar.summary }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
   </body>
 </html>

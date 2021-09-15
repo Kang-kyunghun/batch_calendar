@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My test page</title>
+  </head>
+  <script defer>
+    function fetchPage() {
+      const access_token = sessionStorage.getItem('access_token')
+      return fetch('http://127.0.0.1:8000/calendars', { 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization' : access_token
+        }
+      });
+    };
+
+    fetchPage()
+      .then((response) => response.json())
+      .then((data) => {
+        for (const element of data.data) {
+          let option1 = document.createElement("option");
+          let option2 = document.createElement("option")
+
+          console.log(element.id);
+          option1.textContent = element.summary;
+          option1.value = element.id;
+          option2.textContent = element.summary;
+          option2.value = element.id;
+          googleCalendar1.appendChild(option1)
+          googleCalendar2.appendChild(option2)
+          // document.write("<option>"+element.summary+"</option>");
+        }
+      });
+  </script>
+  <body>
+    <div>
+      <label for="googleCalendar1">Reference Calendars</label>
+      <div>
+        <select id="googleCalendar1">
+          <option value="" selected>Please select a reference calendar</option>
+        </select>
+      </div>  
+    </div>
+    <div>
+      <label for="googleCalendar2">Appling Calendars</label>
+      <div>
+        <select id="googleCalendar2">
+          <option value="" selected>Please select a appling calendar</option>
+        </select>
+      </div>  
+    </div>
+    <div>
+      <input id="apply" type="button" value="fetch">
+      <script>
+        document.getElementById("apply").addEventListener('click', getEvents);
+        
+        function getEvents() {
+          const access_token = sessionStorage.getItem('access_token')
+          const calendar_id = document.getElementById('googleCalendar2').value
+          const referenced_calendar_id = document.getElementById('googleCalendar1').value
+          
+          console.log(calendar_id);
+            return fetch('http://localhost:8000/calendars/google/'+calendar_id+'/events', { 
+              method: "POST", 
+              headers: {
+                'Content-Type': 'application/json',
+                'authorization' : access_token
+              },
+              body: JSON.stringify({
+                "referenced_calendar_id" : referenced_calendar_id,
+                "week_added" : 1
+              })     
+            }
+          ).then(response => response.json())
+           .then(data => {
+              console.log(data);
+              alert("복사 완료");
+            });
+           
+        };
+        </script>
+    </div>
+  </body>
+</html>
